@@ -1,0 +1,19 @@
+.random-planet {
+    background-color: #303030;
+    border-radius: 5px;
+    margin-bottom: 40px;
+}
+
+.random-planet .random-image {
+    width: 150px;
+    margin: 1rem;
+    border-radius: 10px;
+}
+
+.random-planet .planet-info{
+    margin-top: 1rem;
+}
+
+.random-planet .planet-info ul{
+    display: inline-block;
+}

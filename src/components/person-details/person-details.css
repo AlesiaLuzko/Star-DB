@@ -1,0 +1,18 @@
+.person-details {
+    background: #303030;
+    border-radius: 5px;
+}
+
+.person-details .person-image {
+    width: 30%;
+    margin: 1rem;
+    border-radius: 10px;
+}
+
+.person-details .person-info {
+    margin-top: 1rem;
+}
+
+.person-details .person-info ul{
+    margin-right: 1rem;
+}

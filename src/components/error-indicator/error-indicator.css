@@ -1,0 +1,14 @@
+.error-indicator {
+    margin: 10px auto;
+    text-align: center;
+    color: #5F9EA0;
+}
+
+.boom {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.error-indicator img {
+    width: 80px;
+}
