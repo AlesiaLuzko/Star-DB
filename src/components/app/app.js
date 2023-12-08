@@ -1,4 +1,4 @@
-import {Component} from "react";
+import React, {Component} from "react";
 
 import Header from "../header";
 import RandomPlanet from "../random-planet";
@@ -20,7 +20,6 @@ export default class App extends Component {
   }
 
   render() {
-
     if (this.state.hasError) {
       return <ErrorIndicator/>
     }

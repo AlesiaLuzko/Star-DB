@@ -3,8 +3,12 @@ import './people-page.css';
 import ItemList from "../item-list";
 import PersonDetails from "../person-details";
 import ErrorIndicator from "../error-indicator";
+import SwapiService from "../../services/swapi-servise";
 
 export default class PeoplePage extends Component {
+
+  swapiService = new SwapiService();
+
   state = {
     selectedPerson: null,
     hasError: false
@@ -28,10 +32,17 @@ export default class PeoplePage extends Component {
       return <ErrorIndicator/>;
     }
 
+    const itemList = (
+      <ItemList
+        onItemSelected={this.onPersonSelected}
+        getData={this.swapiService.getAllPeople}
+        renderItem={({name,  gender, birthYear}) => `${name} (${gender}, ${birthYear})`}/>
+    )
+
     return (
       <div className="content-list d-flex">
         <div className="content-item">
-          <ItemList onItemSelected={this.onPersonSelected}/>
+          {itemList}
         </div>
         <div className="content-item">
           <PersonDetails personId={this.state.selectedPerson}/>
