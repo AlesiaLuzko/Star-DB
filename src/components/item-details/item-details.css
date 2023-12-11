@@ -1,18 +1,18 @@
-.person-details {
+.item-details {
     background: #303030;
     border-radius: 5px;
 }
 
-.person-details .person-image {
+.item-details .item-image {
     width: 30%;
     margin: 1rem;
     border-radius: 10px;
 }
 
-.person-details .person-info {
+.item-details .item-info {
     margin-top: 1rem;
 }
 
-.person-details .person-info ul{
+.item-details .item-info ul{
     margin-right: 1rem;
 }
