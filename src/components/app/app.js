@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import Header from "../header";
 import RandomPlanet from "../random-planet";
 import ErrorBoundary from "../error-boundary";
-import Row from "../row";
 
 import {
   PersonDetails,
@@ -38,19 +37,11 @@ export default class App extends Component {
           <RandomPlanet/>
           {/*<PeoplePage/>*/}
 
-          <PersonList>
-            { ({name}) => <span>{name}</span> }
-          </PersonList>
+          <PersonList />
+          {/*<PlanetList />*/}
+          {/*<StarshipList />*/}
 
-          {/*<PlanetList>*/}
-          {/*  { ({name}) => <span>{name}</span> }*/}
-          {/*</PlanetList>*/}
-
-          {/*<StarshipList>*/}
-          {/*  { ({name}) => <span>{name}</span> }*/}
-          {/*</StarshipList>*/}
-
-          <PersonDetails itemId={6}/>
+          <PersonDetails itemId={5}/>
           {/*<PlanetDetails itemId={3}/>*/}
           {/*<StarshipDetails itemId={9}/>*/}
 
