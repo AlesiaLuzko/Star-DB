@@ -3,11 +3,25 @@ import './item-details.css';
 import SwapiService from "../../services/swapi-servise";
 import Spinner from "../spinner";
 
+const Record = ({item, label, field}) => {
+  return (
+    <li className="list-group-item">
+      <span className="term">{ label } </span>
+      <span>{ item[field] }</span>
+    </li>
+  );
+};
+
+export {
+  Record
+};
+
 export default class ItemDetails extends Component {
   swapiService = new SwapiService();
 
   state = {
-    item: null
+    item: null,
+    image: null
   }
 
   componentDidMount() {
@@ -24,32 +38,35 @@ export default class ItemDetails extends Component {
   };
 
   onPersonLoaded = (item) => {
+    const { getImageUrl } = this.props;
     this.setState({
       item,
+      image: getImageUrl(item),
       loading: false
     });
   };
 
   updateItem() {
-    const { itemId } = this.props;
+    const { itemId, getData } = this.props;
     if (!itemId) {
       return;
     }
 
-    this.swapiService
-      .getPerson(itemId)
+    getData(itemId)
       .then(this.onPersonLoaded);
   }
 
   render() {
-    const { item, loading } = this.state;
+    const { item, loading, image } = this.state;
 
     if (!item) {
       return <span>Select an item from a list</span>
     }
 
     const spinner = loading ? <Spinner /> : null;
-    const content = !loading ? <PersonView item={item}/> : null;
+    const content = !loading ? <PersonView item={item}
+                                           image={image}
+                                           children={this.props.children}/> : null;
 
     return (
       <div className="item-details d-flex">
@@ -60,27 +77,20 @@ export default class ItemDetails extends Component {
   };
 };
 
-const PersonView = ({item}) => {
-  const { id, name, gender, birthYear, eyeColor } = item;
+const PersonView = ({item, image, children}) => {
+  const { name } = item;
   return (
     <React.Fragment>
       <img className="item-image"
-           src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} alt="item"/>
+           src={image} alt="item"/>
       <div className="item-info card-body">
         <h4>{name}</h4>
         <ul className="list-group list-group-flush">
-          <li className="list-group-item">
-            <span className="term">Gender </span>
-            <span>{gender}</span>
-          </li>
-          <li className="list-group-item">
-            <span className="term">Birth Year </span>
-            <span>{birthYear}</span>
-          </li>
-          <li className="list-group-item">
-            <span className="term">Eye Color </span>
-            <span>{eyeColor}</span>
-          </li>
+          {
+            React.Children.map(children, (child) => {
+              return React.cloneElement(child, { item });
+            })
+          }
         </ul>
       </div>
     </React.Fragment>
