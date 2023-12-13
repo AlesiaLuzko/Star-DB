@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import './item-details.css';
-import SwapiService from "../../services/swapi-servise";
 import Spinner from "../spinner";
 
 const Record = ({item, label, field}) => {
@@ -17,8 +16,6 @@ export {
 };
 
 export default class ItemDetails extends Component {
-  swapiService = new SwapiService();
-
   state = {
     item: null,
     image: null
