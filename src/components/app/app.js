@@ -4,6 +4,7 @@ import Header from "../header";
 import RandomPlanet from "../random-planet";
 import ErrorBoundary from "../error-boundary";
 import SwapiService from "../../services/swapi-servise";
+import { SwapiServiceProvider } from "../swapi-service-context";
 
 import {
   PersonDetails,
@@ -13,8 +14,6 @@ import {
   PlanetList,
   StarshipList
 } from "../sw-components";
-
-import { SwapiServiceProvider } from "../swapi-service-context";
 
 import './app.css';
 
