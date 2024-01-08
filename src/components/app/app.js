@@ -1,7 +1,11 @@
 import React, { Component } from "react";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider
+} from "react-router-dom";
 
-import Header from "../header";
-import RandomPlanet from "../random-planet";
 import ErrorBoundary from "../error-boundary";
 import SwapiService from "../../services/swapi-servise";
 import { SwapiServiceProvider } from "../swapi-service-context";
@@ -9,22 +13,25 @@ import { PeoplePage, PlanetsPage, StarshipsPage } from "../pages";
 
 import './app.css';
 
+import Layout from "../layout";
+
+const router = createBrowserRouter(createRoutesFromElements(
+  <Route path="/" element={<Layout />}>
+    <Route path="people" element={<PeoplePage />} />
+    <Route path="planets" element={<PlanetsPage />} />
+    <Route path="starships" element={<StarshipsPage />} />
+  </Route>
+));
 
 export default class App extends Component {
-
   swapiService = new SwapiService();
 
   render() {
-
     return (
       <ErrorBoundary>
-        <SwapiServiceProvider value={this.swapiService} >
+        <SwapiServiceProvider value={this.swapiService}>
           <div className="app">
-            <Header />
-            <RandomPlanet />
-            <PeoplePage />
-            <PlanetsPage />
-            <StarshipsPage />
+            <RouterProvider router={router} />
           </div>
         </SwapiServiceProvider>
       </ErrorBoundary>
