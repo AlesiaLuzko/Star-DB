@@ -19,6 +19,7 @@ import Layout from "../layout";
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path="/" element={<Layout />}>
     <Route path="people" element={<PeoplePage />} />
+    <Route path="people/:id" element={<PeoplePage />} />
     <Route path="planets" element={<PlanetsPage />} />
     <Route path="starships" element={<StarshipsPage />} />
     <Route path="starships/:id"

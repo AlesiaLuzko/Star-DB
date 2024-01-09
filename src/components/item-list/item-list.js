@@ -13,6 +13,7 @@ const ItemList = (props) => {
 
     return (
       <li className="list-group-item list-group-item-action"
+          key={item.id}
           onClick={() => onItemSelected(id)}>
         {label}
       </li>
