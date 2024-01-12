@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -21,55 +21,49 @@ import {
 
 import './app.css';
 
-export default class App extends Component {
+const App = () => {
 
-  state = {
-    isLoggedIn: false
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const onLogin = () => {
+    setIsLoggedIn(true);
   };
 
-  onLogin = () => {
-    this.setState({
-      isLoggedIn: true
-    });
-  };
+  const swapiService = new SwapiService();
 
-  swapiService = new SwapiService();
+  const router = createBrowserRouter(createRoutesFromElements(
+    <Route path="/" element={<Layout />}>
+      <Route path="people" element={<PeoplePage />} />
+      <Route path="people/:id" element={<PeoplePage />} />
+      <Route path="planets" element={<PlanetsPage />} />
+      <Route path="starships" element={<StarshipsPage />} />
+      <Route path="starships/:id"
+             element={<StarshipDetails /> } />
+      <Route
+        path="login"
+        element={<LoginPage
+          isLoggedIn={isLoggedIn}
+          onLogin={onLogin}/>}
+      />
+      <Route
+        path="secret"
+        element={<SecretPage isLoggedIn={isLoggedIn} />}
+      />
+      <Route
+        path="*"
+        element={<p className="text-center">Page not found!</p>} />
+    </Route>
+  ));
 
-  render() {
-    const { isLoggedIn } = this.state;
-
-    const router = createBrowserRouter(createRoutesFromElements(
-      <Route path="/" element={<Layout />}>
-        <Route path="people" element={<PeoplePage />} />
-        <Route path="people/:id" element={<PeoplePage />} />
-        <Route path="planets" element={<PlanetsPage />} />
-        <Route path="starships" element={<StarshipsPage />} />
-        <Route path="starships/:id"
-               element={<StarshipDetails /> } />
-        <Route
-          path="login"
-          element={<LoginPage
-            isLoggedIn={isLoggedIn}
-            onLogin={this.onLogin}/>}
-        />
-        <Route
-          path="secret"
-          element={<SecretPage isLoggedIn={isLoggedIn} />}
-        />
-        <Route
-          path="*"
-          element={<p className="text-center">Page not found!</p>} />
-      </Route>
-    ));
-
-    return (
-      <ErrorBoundary>
-        <SwapiServiceProvider value={this.swapiService}>
-          <div className="app">
-            <RouterProvider router={router} />
-          </div>
-        </SwapiServiceProvider>
-      </ErrorBoundary>
-    );
-  };
+  return (
+    <ErrorBoundary>
+      <SwapiServiceProvider value={swapiService}>
+        <div className="app">
+          <RouterProvider router={router} />
+        </div>
+      </SwapiServiceProvider>
+    </ErrorBoundary>
+  );
 };
+
+export default App;
