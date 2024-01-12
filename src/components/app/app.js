@@ -56,6 +56,9 @@ export default class App extends Component {
           path="secret"
           element={<SecretPage isLoggedIn={isLoggedIn} />}
         />
+        <Route
+          path="*"
+          element={<p className="text-center">Page not found!</p>} />
       </Route>
     ));
 
