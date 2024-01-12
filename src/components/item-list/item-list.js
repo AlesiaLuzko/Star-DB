@@ -1,50 +1,40 @@
-import {Component} from "react";
+import React from "react";
+import PropTypes from "prop-types";
+
 import './item-list.css';
-import SwapiService from "../../services/swapi-servise";
-import Spinner from "../spinner";
 
-export default class ItemList extends Component {
-  swapiService = new SwapiService();
+const ItemList = (props) => {
 
-  state = {
-    peopleList: null
-  }
+  const { data, onItemSelected, children: renderLabel } = props;
 
-  componentDidMount() {
-    this.swapiService
-      .getAllPeople()
-      .then((peopleList) => {
-        this.setState({
-          peopleList
-        });
-      });
-  };
-
-  renderItems(arr) {
-    return arr.map(({id, name}) => {
-      return (
-        <li className="list-group-item list-group-item-action"
-            key={id}
-            onClick={() => this.props.onItemSelected(id)}>
-          {name}
-        </li>
-      );
-    });
-  };
-
-  render() {
-    const { peopleList } = this.state;
-
-    if(!peopleList) {
-      return <Spinner/>
-    }
-
-    const items = this.renderItems(peopleList);
+  const items = data.map((item) => {
+    const { id } = item;
+    const label = renderLabel(item);
 
     return (
-      <ul className="item-list list-group list-group-flush">
-        {items}
-      </ul>
+      <li className="list-group-item list-group-item-action"
+          key={item.id}
+          onClick={() => onItemSelected(id)}>
+        {label}
+      </li>
     );
-  };
+  });
+
+  return (
+    <ul className="item-list list-group list-group-flush">
+      {items}
+    </ul>
+  );
 };
+
+ItemList.defaultProps = {
+  onItemSelected: () => {}
+};
+
+ItemList.propTypes = {
+  onItemSelected: PropTypes.func,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  children: PropTypes.func.isRequired
+};
+
+export default ItemList;

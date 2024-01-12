@@ -1,36 +1,75 @@
-import {Component} from "react";
+import React, { Component } from "react";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider
+} from "react-router-dom";
 
-import Header from "../header";
-import RandomPlanet from "../random-planet";
-import PeoplePage from "../people-page";
-import ErrorIndicator from "../error-indicator";
+import ErrorBoundary from "../error-boundary";
+import SwapiService from "../../services/swapi-servise";
+import Layout from "../layout";
+import { SwapiServiceProvider } from "../swapi-service-context";
+import { StarshipDetails } from "../sw-components";
+import {
+  PeoplePage,
+  PlanetsPage,
+  StarshipsPage,
+  LoginPage,
+  SecretPage
+} from "../pages";
 
 import './app.css';
 
 export default class App extends Component {
 
   state = {
-    hasError: false
-  }
+    isLoggedIn: false
+  };
 
-  componentDidCatch(error, errorInfo) {
+  onLogin = () => {
     this.setState({
-      hasError: true
+      isLoggedIn: true
     });
-  }
+  };
+
+  swapiService = new SwapiService();
 
   render() {
+    const { isLoggedIn } = this.state;
 
-    if (this.state.hasError) {
-      return <ErrorIndicator/>
-    }
+    const router = createBrowserRouter(createRoutesFromElements(
+      <Route path="/" element={<Layout />}>
+        <Route path="people" element={<PeoplePage />} />
+        <Route path="people/:id" element={<PeoplePage />} />
+        <Route path="planets" element={<PlanetsPage />} />
+        <Route path="starships" element={<StarshipsPage />} />
+        <Route path="starships/:id"
+               element={<StarshipDetails /> } />
+        <Route
+          path="login"
+          element={<LoginPage
+            isLoggedIn={isLoggedIn}
+            onLogin={this.onLogin}/>}
+        />
+        <Route
+          path="secret"
+          element={<SecretPage isLoggedIn={isLoggedIn} />}
+        />
+        <Route
+          path="*"
+          element={<p className="text-center">Page not found!</p>} />
+      </Route>
+    ));
 
     return (
-      <div className="app">
-        <Header/>
-        <RandomPlanet/>
-        <PeoplePage/>
-      </div>
+      <ErrorBoundary>
+        <SwapiServiceProvider value={this.swapiService}>
+          <div className="app">
+            <RouterProvider router={router} />
+          </div>
+        </SwapiServiceProvider>
+      </ErrorBoundary>
     );
   };
 };
