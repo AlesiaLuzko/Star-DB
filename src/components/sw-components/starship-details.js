@@ -9,9 +9,9 @@ const StarshipDetails = (props) => {
 
   return (
     <ItemDetails {...props } itemId={id} >
-      <Record field="model" label="Model"/>
-      <Record field="length" label="Length"/>
-      <Record field="costInCredits" label="Cost"/>
+      <Record key="model" field="model" label="Model"/>
+      <Record key="length" field="length" label="Length"/>
+      <Record key="costInCredits" field="costInCredits" label="Cost"/>
     </ItemDetails>
   );
 };
