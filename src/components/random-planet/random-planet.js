@@ -1,70 +1,57 @@
-import React, {Component} from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import SwapiService from "../../services/swapi-servise";
 import Spinner from "../spinner";
 import ErrorIndicator from "../error-indicator";
 
-import './random-planet.css';
+import "./random-planet.css";
 
-export default class RandomPlanet extends Component {
-  swapiService = new SwapiService();
+const RandomPlanet = ({updateInterval = 7000}) => {
+  const swapiService = new SwapiService();
 
-  state = {
-    planet: {},
-    loading: true
-  }
+  const [planet, setPlanet] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  componentDidMount() {
-    const { updateInterval } = this.props;
-    this.updatePlanet();
-    setInterval(this.updatePlanet, updateInterval);
-  }
-
-  onPlanetLoaded = (planet) => {
-    this.setState({
-      planet,
-      loading: false,
-      error: false
-    });
-  };
-
-  onError = () => {
-    this.setState({
-      error: true,
-      loading: false
-    });
-  };
-
-  updatePlanet = () => {
-    const id = Math.floor(Math.random()*18) + 2;
-    this.swapiService
+  const updatePlanet = () => {
+    const id = Math.floor(Math.random() * 18) + 2;
+    swapiService
       .getPlanet(id)
-      .then(this.onPlanetLoaded)
-      .catch(this.onError);
-  }
-
-  render() {
-    const { planet, loading, error } = this.state;
-
-    const hasData = !(loading || error);
-
-    const errorMessage = error ? <ErrorIndicator/> : null;
-    const spinner = loading ? <Spinner/> : null;
-    const content = hasData ? <PlanetView planet={planet}/> : null;
-
-    return (
-      <div className="random-planet d-flex">
-        {errorMessage}
-        {spinner}
-        {content}
-      </div>
-    );
+      .then(onPlanetLoaded)
+      .catch(onError);
   };
-};
 
-RandomPlanet.defaultProps = {
-  updateInterval: 7000
+  const onPlanetLoaded = (planet) => {
+    setPlanet(planet);
+    setLoading(false);
+    setError(false);
+  };
+
+  const onError = () => {
+    setError(true);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    updatePlanet()
+    const interval = setInterval(updatePlanet, updateInterval);
+    return () => clearInterval(interval);
+  }, []);
+
+  const hasData = !(loading || error);
+
+  const errorMessage = error ? <ErrorIndicator/> : null;
+  const spinner = loading ? <Spinner/> : null;
+  const content = hasData ? <PlanetView planet={planet}/> : null;
+
+  return (
+    <div className="random-planet d-flex">
+      {errorMessage}
+      {spinner}
+      {content}
+    </div>
+  );
 };
 
 RandomPlanet.propTypes = {
@@ -98,3 +85,5 @@ const PlanetView = ({planet}) => {
     </React.Fragment>
   );
 };
+
+export default RandomPlanet;
