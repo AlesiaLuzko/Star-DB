@@ -1,5 +1,8 @@
 .item-list {
     margin-bottom: 30px;
+}
+
+.item-list ul {
     cursor: pointer;
     border-radius: 5px;
 }

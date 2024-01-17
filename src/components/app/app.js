@@ -19,7 +19,8 @@ import {
   SecretPage
 } from "../pages";
 
-import './app.css';
+import "../../global-styles/bootstrap.css";
+import "./app.css";
 
 const App = () => {
 

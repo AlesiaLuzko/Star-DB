@@ -21,9 +21,11 @@ const ItemList = (props) => {
   });
 
   return (
-    <ul className="item-list list-group list-group-flush">
-      {items}
-    </ul>
+    <div className="item-list">
+      <ul className="list-group list-group-flush">
+        {items}
+      </ul>
+    </div>
   );
 };
 

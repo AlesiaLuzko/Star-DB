@@ -65,7 +65,7 @@ const ItemView = ({ item, image, children }) => {
     <React.Fragment>
       <img className="item-image"
            src={image} alt="item"/>
-      <div className="item-info card-body">
+      <div className="item-info">
         <h4>{name}</h4>
         <ul className="list-group list-group-flush">
           {
