@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import Spinner from "../spinner";
+import ErrorButton from "../error-button";
+
 import './item-details.css';
 
 const Record = ({ item, label, field }) => {
@@ -74,6 +76,7 @@ const ItemView = ({ item, image, children }) => {
             })
           }
         </ul>
+        <ErrorButton />
       </div>
     </React.Fragment>
   );

@@ -3,8 +3,8 @@
     border-radius: 5px;
 }
 
-.item-details .item-image {
-    width: 30%;
+.item-image {
+    height: 200px;
     margin: 1rem;
     border-radius: 10px;
 }

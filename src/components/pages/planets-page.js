@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+
 import { PlanetDetails, PlanetList } from "../sw-components";
 import Row from "../row";
+import ErrorBoundary from "../error-boundary";
 
 const PlanetsPage = () => {
 
@@ -11,9 +13,11 @@ const PlanetsPage = () => {
   };
 
   return (
-    <Row
-      left={<PlanetList onItemSelected={onItemSelected}/>}
-      right={ <PlanetDetails itemId={selectedItem}/>} />
+    <ErrorBoundary>
+      <Row
+        left={<PlanetList onItemSelected={onItemSelected}/>}
+        right={ <PlanetDetails itemId={selectedItem}/>} />
+    </ErrorBoundary>
   );
 };
 
