@@ -45,10 +45,10 @@ const ItemDetails = ({ getImageUrl, children, itemId, getData }) => {
   }, [itemId]);
 
   if (!item) {
-    return <span>Select an item from a list</span>;
+    return <div></div>;
   }
 
-  const spinner = loading ? <Spinner/> : null;
+  const spinner = loading ? <Spinner /> : null;
   const content = !loading ? <ItemView item={item}
                                        image={image}
                                        children={children} /> : null;
